@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : DS_Assignment_1.cpp
-// Author      : Ahmed
+// Author      : Ahmed Sherif Mohamed
 // Version     :
 // Copyright   : M7dsh yeslemo makani
 // Description : Hello World in C++, Ansi-style
@@ -28,6 +28,10 @@ class Stack {
 		Error clear();
 		Error replace(const int&, const int&);
 		Error print();
+
+		bool isEmpty() {
+			return usedSize == 0;
+		}
 
 	private:
 		int size;
@@ -179,21 +183,45 @@ Error Stack::replace(const int &item, const int &anotherItem) {
 	return rtnError;
 }
 
+void replace(Stack &inputStack, const int &size, const int &item, const int &item2Replace) {
+	int *temp = new int[size];
+
+	int data, i = 0;
+	while (inputStack.isEmpty() == false) {
+		data = inputStack.top();
+
+		if (data == item) {
+			data = item2Replace;
+		}
+
+		temp[i] = data;
+		i++;
+
+		inputStack.pop();
+	}
+
+	int j;
+	for (j = 0; j < i; j++) {
+		inputStack.push(temp[i - j - 1]);
+	}
+}
+
 int main() {
 
-	Stack s(7);
+	int size = 7;
+	Stack s(size);
 
-	s.push(0x1);
-	s.push(0x3);
-	s.push(0x14);
-	s.push(0x12);
-	s.push(0x15);
-	s.push(0x18);
-	s.push(0x19);
+	s.push(1);
+	s.push(3);
+	s.push(14);
+	s.push(12);
+	s.push(15);
+	s.push(18);
+	s.push(19);
 
 	s.print();
 
-	s.replace(3, 5);
+	replace(s, size, 3, 5);
 	s.print();
 
 	return 0;
