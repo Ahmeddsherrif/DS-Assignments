@@ -81,22 +81,32 @@ int main() {
 //		PRINT_LINE();
 //	}
 
+//	currentErrorMessage = Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
+//	if (currentErrorMessage == Error_t::NO_ERROR) {
+//
+//		cout << "Merge Sort A:" << endl;
+//		Array_IO::printArray(array, arraySize);
+//		Sorting::mergeSort(array, arraySize, Sorting::sortA);
+//		Array_IO::printArray(array, arraySize);
+//		PRINT_LINE();
+//	}
+//
+//	currentErrorMessage = Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
+//	if (currentErrorMessage == Error_t::NO_ERROR) {
+//
+//		cout << "Merge Sort D:" << endl;
+//		Array_IO::printArray(array, arraySize);
+//		Sorting::mergeSort(array, arraySize, Sorting::sortD);
+//		Array_IO::printArray(array, arraySize);
+//		PRINT_LINE();
+//	}
+
 	currentErrorMessage = Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
 	if (currentErrorMessage == Error_t::NO_ERROR) {
 
-		cout << "Merge Sort A:" << endl;
+		cout << "Quick Sort:" << endl;
 		Array_IO::printArray(array, arraySize);
-		Sorting::mergeSort(array, arraySize, Sorting::sortA);
-		Array_IO::printArray(array, arraySize);
-		PRINT_LINE();
-	}
-
-	currentErrorMessage = Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
-	if (currentErrorMessage == Error_t::NO_ERROR) {
-
-		cout << "Merge Sort D:" << endl;
-		Array_IO::printArray(array, arraySize);
-		Sorting::mergeSort(array, arraySize, Sorting::sortD);
+		Sorting::quickSort(array, arraySize);
 		Array_IO::printArray(array, arraySize);
 		PRINT_LINE();
 	}

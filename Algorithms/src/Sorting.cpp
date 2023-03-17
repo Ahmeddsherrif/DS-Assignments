@@ -5,15 +5,51 @@
  *      Author: Master
  */
 
-
 #include "Sorting.h"
 
+void Sorting::quickSort(int *arr, const unsigned int &arrSize) {
+
+	if (arrSize == 1) {
+		return;
+	}
+
+	//ASSUME THAT THE PIVOT IS THE FIRST ELEMENT
+	int &pivot = arr[0];
+
+	unsigned int startIndex = 1;
+	unsigned int endIndex = arrSize - 1;
+
+	while (startIndex < endIndex) {
+		if (((arr[startIndex] < pivot) || (arr[endIndex] >= pivot)) == false) {
+			swapElements(arr[endIndex], arr[startIndex]);
+		}
+
+		if (arr[startIndex] < pivot) {
+			startIndex++;
+		}
+
+		if (arr[endIndex] >= pivot) {
+			endIndex--;
+		}
+	}
+
+	if ((arr[endIndex] >= pivot) == false) {
+		swapElements(pivot, arr[endIndex]);
+	}
+
+	int *leftPartionArray = arr;
+	int leftPartionArraySize = endIndex;
+
+	int *rightPartionArray = arr + endIndex;
+	int rightPartionArraySize = arrSize - endIndex;
+
+	quickSort(leftPartionArray, leftPartionArraySize);
+	quickSort(rightPartionArray, rightPartionArraySize);
+}
 
 void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunction)(int&, int&)) {
 
-	unsigned int mid = arrSize / 2;
-
-	if (mid == 0) {
+	if (arrSize == 1) {
 		return;
 	}
 
@@ -21,6 +57,7 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 	int *leftArray = nullptr;
 	int *rightArray = nullptr;
 
+	unsigned int mid = arrSize / 2;
 	unsigned int leftArraySize = mid;
 	unsigned int rightArraySize = arrSize - mid;
 
@@ -29,7 +66,6 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 
 	// Assign Values to the two arrays
 	unsigned int arrayIndex = 0;
-
 
 	unsigned int leftIndex;
 	for (leftIndex = 0; leftIndex < leftArraySize; leftIndex++) {
@@ -51,7 +87,6 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 	leftIndex = 0;
 	rightIndex = 0;
 
-
 	while ((leftIndex < leftArraySize) && (rightIndex < rightArraySize)) {
 
 		if (ptrFunction(leftArray[leftIndex], rightArray[rightIndex]) == true) {
@@ -67,13 +102,13 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 		arrayIndex++;
 	}
 
-	while(leftIndex < leftArraySize){
+	while (leftIndex < leftArraySize) {
 		arr[arrayIndex] = leftArray[leftIndex];
 		leftIndex++;
 		arrayIndex++;
 	}
 
-	while(rightIndex < rightArraySize){
+	while (rightIndex < rightArraySize) {
 		arr[arrayIndex] = rightArray[rightIndex];
 		rightIndex++;
 		arrayIndex++;
