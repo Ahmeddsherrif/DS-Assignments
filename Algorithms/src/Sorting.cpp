@@ -7,34 +7,69 @@
 
 #include <string.h>
 #include <assert.h>
+#include <stack>
+
+using namespace std;
 
 #include "Sorting.h"
 
-void Sorting::radixSort(int *arr, const unsigned int &arrSize);
+void Sorting::radixSort(int *arr, const unsigned int &arrSize) {
 
-void Sorting::countSort(int *arr, const unsigned int &arrSize) {
+	stack<int> bucket[10];
 
-	int countArray[10];
-	memset(countArray, 0, sizeof(countArray));
+}
 
-	unsigned int currentArrayElement;
+void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minElement, const int &maxElement) {
 	unsigned int arrayIndex;
+
+	// Create New Count Array with Size equal to size of the element range
+	const unsigned int arrayElementRange = maxElement - minElement;
+	int *countArray = nullptr;
+	countArray = new int[arrayElementRange]();
+	assert(countArray != nullptr);
+	unsigned int countArrayIndex;
+
+	// Fill in the Count Array
+	int currentArrayElement;
 	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
 		currentArrayElement = arr[arrayIndex];
-		countArray[currentArrayElement]++;
+		assert(currentArrayElement >= minElement && currentArrayElement <= maxElement);
+
+		countArrayIndex = currentArrayElement - minElement;
+		countArray[countArrayIndex]++;
 	}
 
-	unsigned int countArrayIndex;
-	for (countArrayIndex = 0, arrayIndex = 0; countArrayIndex < 10 ; countArrayIndex++) {
-
-		assert(arrayIndex <= arrSize);
-
-		while (countArray[countArrayIndex] > 0) {
-			arr[arrayIndex] = countArrayIndex;
-			arrayIndex++;
-			countArray[countArrayIndex]--;
-		}
+	// Make Count Array Hold the End index to the Temp Array + 1
+	for (countArrayIndex = 1; countArrayIndex < arrayElementRange; countArrayIndex++) {
+		countArray[countArrayIndex] += countArray[countArrayIndex - 1];
 	}
+
+	// Create Temp Array
+	int *tempArray = nullptr;
+	tempArray = new int[arrSize]();
+	assert(tempArray != nullptr);
+	unsigned int tempArrayIndex;
+
+	// map the Temp Array index with the arrayElement and the count array
+	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+		currentArrayElement = arr[arrayIndex];
+
+		countArrayIndex = currentArrayElement;
+		tempArrayIndex = --countArray[countArrayIndex];		// to subtract the + 1
+
+		tempArray[tempArrayIndex] = arr[arrayIndex];
+	}
+
+	delete[] countArray;
+	countArray = nullptr;
+
+	// Fill in the original Array
+	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+		arr[arrayIndex] = tempArray[arrayIndex];
+	}
+
+	delete[] tempArray;
+	tempArray = nullptr;
 }
 
 void Sorting::quickSort(int *arr, const unsigned int &arrSize) {

@@ -25,7 +25,7 @@ class Sorting {
 		static void selectionSort(int *arr, const unsigned int &arrSize, bool (*ptrFunction)(int&, int&));
 		static void mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunction)(int&, int&));
 		static void quickSort(int *arr, const unsigned int &arrSize);
-		static void countSort(int *arr, const unsigned int &arrSize);
+		static void countSort(int *arr, const unsigned int &arrSize, const int& minElement, const int &maxElement);
 		static void radixSort(int *arr, const unsigned int &arrSize);
 	private:
 		static void swapElements(int &firstElement, int &secondElement);

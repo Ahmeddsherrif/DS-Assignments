@@ -31,7 +31,7 @@
 
 int main() {
 
-	unsigned int arraySize = 5;
+	unsigned int arraySize = 10;
 	int array[ARRAY_MAX_SIZE];
 
 	PRINT_LINE();
@@ -138,7 +138,7 @@ int main() {
 
 	cout << "Count Sort:" << endl;
 	Array_IO::printArray(array, arraySize);
-	Sorting::countSort(array, arraySize);
+	Sorting::countSort(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
 	Array_IO::printArray(array, arraySize);
 	PRINT_LINE();
 
