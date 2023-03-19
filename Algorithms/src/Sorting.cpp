@@ -54,7 +54,7 @@ void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minEle
 	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
 		currentArrayElement = arr[arrayIndex];
 
-		countArrayIndex = currentArrayElement;
+		countArrayIndex = currentArrayElement - minElement;
 		tempArrayIndex = --countArray[countArrayIndex];		// to subtract the + 1
 
 		tempArray[tempArrayIndex] = arr[arrayIndex];
