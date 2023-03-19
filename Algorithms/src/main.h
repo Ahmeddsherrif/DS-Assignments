@@ -20,8 +20,8 @@ using namespace std;
 
 
 
-#define ARRAY_RAND_MIN		3
-#define ARRAY_RAND_MAX		10
+#define ARRAY_RAND_MIN		0
+#define ARRAY_RAND_MAX		9
 
 
 

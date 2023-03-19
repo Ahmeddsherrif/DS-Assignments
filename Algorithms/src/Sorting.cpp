@@ -5,7 +5,37 @@
  *      Author: Master
  */
 
+#include <string.h>
+#include <assert.h>
+
 #include "Sorting.h"
+
+void Sorting::radixSort(int *arr, const unsigned int &arrSize);
+
+void Sorting::countSort(int *arr, const unsigned int &arrSize) {
+
+	int countArray[10];
+	memset(countArray, 0, sizeof(countArray));
+
+	unsigned int currentArrayElement;
+	unsigned int arrayIndex;
+	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+		currentArrayElement = arr[arrayIndex];
+		countArray[currentArrayElement]++;
+	}
+
+	unsigned int countArrayIndex;
+	for (countArrayIndex = 0, arrayIndex = 0; countArrayIndex < 10 ; countArrayIndex++) {
+
+		assert(arrayIndex <= arrSize);
+
+		while (countArray[countArrayIndex] > 0) {
+			arr[arrayIndex] = countArrayIndex;
+			arrayIndex++;
+			countArray[countArrayIndex]--;
+		}
+	}
+}
 
 void Sorting::quickSort(int *arr, const unsigned int &arrSize) {
 
@@ -13,23 +43,24 @@ void Sorting::quickSort(int *arr, const unsigned int &arrSize) {
 		return;
 	}
 
-	//ASSUME THAT THE PIVOT IS THE FIRST ELEMENT
+//ASSUME THAT THE PIVOT IS THE FIRST ELEMENT
 	int &pivot = arr[0];
 
 	unsigned int startIndex = 1;
 	unsigned int endIndex = arrSize - 1;
 
 	while (startIndex < endIndex) {
-		if (((arr[startIndex] < pivot) || (arr[endIndex] >= pivot)) == false) {
-			swapElements(arr[endIndex], arr[startIndex]);
-		}
 
-		if (arr[startIndex] < pivot) {
+		while (arr[startIndex] < pivot && startIndex < endIndex) {
 			startIndex++;
 		}
 
-		if (arr[endIndex] >= pivot) {
+		while (arr[endIndex] >= pivot && startIndex < endIndex) {
 			endIndex--;
+		}
+
+		if (startIndex < endIndex) {
+			swapElements(arr[endIndex], arr[startIndex]);
 		}
 	}
 
@@ -53,7 +84,7 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 		return;
 	}
 
-	// Create the two arrays
+// Create the two arrays
 	int *leftArray = nullptr;
 	int *rightArray = nullptr;
 
@@ -64,7 +95,7 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 	leftArray = new int[leftArraySize];
 	rightArray = new int[rightArraySize];
 
-	// Assign Values to the two arrays
+// Assign Values to the two arrays
 	unsigned int arrayIndex = 0;
 
 	unsigned int leftIndex;
@@ -79,7 +110,7 @@ void Sorting::mergeSort(int *arr, const unsigned int &arrSize, bool (*ptrFunctio
 		arrayIndex++;
 	}
 
-	//recursive call to split the array even further
+//recursive call to split the array even further
 	mergeSort(leftArray, leftArraySize, ptrFunction);
 	mergeSort(rightArray, rightArraySize, ptrFunction);
 
