@@ -10,6 +10,7 @@
 
 
 #define ARRAY_MAX_SIZE		100
+#define RAND_SEED			50
 
 #define PRINT_WIDTH			100
 #define PRINT_CHAR			'='

@@ -21,7 +21,9 @@ using namespace std;
 
 
 #define ARRAY_RAND_MIN		0
-#define ARRAY_RAND_MAX		20
+#define ARRAY_RAND_MAX		1242
+
+
 
 
 

@@ -15,15 +15,106 @@ using namespace std;
 
 void Sorting::radixSort(int *arr, const unsigned int &arrSize) {
 
-	stack<int> bucket[10];
+	int maxArrayElement = arr[0];
 
+	unsigned int arrayIndex;
+	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+		if (arr[arrayIndex] > maxArrayElement) {
+			maxArrayElement = arr[arrayIndex];
+		}
+	}
+
+	unsigned int numberOfDigits = 1;
+	while (maxArrayElement > 9) {
+		numberOfDigits++;
+		maxArrayElement /= 10;
+	}
+
+	// Create New Count Array with Size equal to 10
+	int *countArray = nullptr;
+	countArray = new int[10]();
+	assert(countArray != nullptr);
+	unsigned int countArrayIndex;
+
+	// Create Temp Array
+	int *tempArray = nullptr;
+	tempArray = new int[arrSize]();
+	assert(tempArray != nullptr);
+	unsigned int tempArrayIndex;
+
+	unsigned int tenFactor = 1;
+	unsigned int digitIndex;
+	for (digitIndex = 1; digitIndex <= numberOfDigits; digitIndex++, tenFactor *= 10) {
+
+		// Fill Count Array
+		int currentArrayElement;
+		unsigned int arrayIndex;
+		for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+			currentArrayElement = arr[arrayIndex];
+			countArrayIndex = (currentArrayElement % (10 * tenFactor)) / tenFactor;
+			countArray[countArrayIndex]++;
+		}
+
+		// Make Count Array Hold the End index to the Temp Array + 1
+		for (countArrayIndex = 1; countArrayIndex < 10; countArrayIndex++) {
+			countArray[countArrayIndex] += countArray[countArrayIndex - 1];
+		}
+
+		// Fill Temp Array
+		for (arrayIndex = arrSize-1; static_cast<int>(arrayIndex) >= 0; arrayIndex--) {
+			currentArrayElement = arr[arrayIndex];
+
+			countArrayIndex = (currentArrayElement % (10 * tenFactor)) / tenFactor;
+			tempArrayIndex = --countArray[countArrayIndex];		// to subtract the + 1
+
+			tempArray[tempArrayIndex] = arr[arrayIndex];
+		}
+
+		// Zero Count Array
+		memset(countArray, 0, 10 * sizeof(int));
+
+		// Fill in the original Array
+		for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+			arr[arrayIndex] = tempArray[arrayIndex];
+		}
+
+		// Zero Temp Array
+		memset(tempArray, 0, arrSize * sizeof(int));
+	}
+
+	// Delete Count Array
+	delete[] countArray;
+	countArray = nullptr;
+
+	// Delete Temp Array
+	delete[] tempArray;
+	tempArray = nullptr;
 }
 
-void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minElement, const int &maxElement) {
+void Sorting::countSort(int *arr, const unsigned int &arrSize) {
+
+	int minElement = arr[0];
+	int maxElement = arr[0];
+
+	//find min and max elements
 	unsigned int arrayIndex;
+	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+		if (arr[arrayIndex] > maxElement) {
+			maxElement = arr[arrayIndex];
+		}
+
+		else if (arr[arrayIndex] < minElement) {
+			minElement = arr[arrayIndex];
+		}
+	}
+
+	countSort(arr, arrSize, minElement, maxElement);
+}
+
+void Sorting::countSort(int *arr, const unsigned int &arrSize, const unsigned int &minElement, const unsigned int &maxElement) {
 
 	// Create New Count Array with Size equal to size of the element range
-	const unsigned int arrayElementRange = maxElement - minElement;
+	const unsigned int arrayElementRange = maxElement - minElement + 1;
 	int *countArray = nullptr;
 	countArray = new int[arrayElementRange]();
 	assert(countArray != nullptr);
@@ -31,10 +122,9 @@ void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minEle
 
 	// Fill in the Count Array
 	int currentArrayElement;
+	unsigned int arrayIndex;
 	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
 		currentArrayElement = arr[arrayIndex];
-		assert(currentArrayElement >= minElement && currentArrayElement <= maxElement);
-
 		countArrayIndex = currentArrayElement - minElement;
 		countArray[countArrayIndex]++;
 	}
@@ -51,7 +141,7 @@ void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minEle
 	unsigned int tempArrayIndex;
 
 	// map the Temp Array index with the arrayElement and the count array
-	for (arrayIndex = 0; arrayIndex < arrSize; arrayIndex++) {
+	for (arrayIndex = arrSize - 1; static_cast<int>(arrayIndex) >= 0; arrayIndex--) {
 		currentArrayElement = arr[arrayIndex];
 
 		countArrayIndex = currentArrayElement - minElement;
@@ -59,6 +149,7 @@ void Sorting::countSort(int *arr, const unsigned int &arrSize, const int &minEle
 
 		tempArray[tempArrayIndex] = arr[arrayIndex];
 	}
+
 
 	delete[] countArray;
 	countArray = nullptr;

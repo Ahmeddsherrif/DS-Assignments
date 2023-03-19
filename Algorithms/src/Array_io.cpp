@@ -42,7 +42,7 @@ Error_t Array_IO::inputRandom(int *arr, const unsigned int &arrSize, const int &
 
 	Error_t currentErrorMessage = Error_t::NO_ERROR;
 
-	srand(55);
+	srand(RAND_SEED);
 
 	if (currentErrorMessage == Error_t::NO_ERROR) {
 		if (arrSize > Array_IO::arrayMaxSize) {

@@ -31,7 +31,7 @@
 
 int main() {
 
-	unsigned int arraySize = 10;
+	unsigned int arraySize = 4;
 	int array[ARRAY_MAX_SIZE];
 
 	PRINT_LINE();
@@ -134,11 +134,19 @@ int main() {
 //		PRINT_LINE();
 //	}
 
+//	Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
+//
+//	cout << "Count Sort:" << endl;
+//	Array_IO::printArray(array, arraySize);
+//	Sorting::countSort(array, arraySize);
+//	Array_IO::printArray(array, arraySize);
+//	PRINT_LINE();
+
 	Array_IO::inputRandom(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
 
-	cout << "Count Sort:" << endl;
+	cout << "Radix Sort:" << endl;
 	Array_IO::printArray(array, arraySize);
-	Sorting::countSort(array, arraySize, ARRAY_RAND_MIN, ARRAY_RAND_MAX);
+	Sorting::radixSort(array, arraySize);
 	Array_IO::printArray(array, arraySize);
 	PRINT_LINE();
 
