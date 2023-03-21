@@ -1,82 +1,32 @@
 #include "main.h"
 
 int main() {
-//	Queue<Student> q(3);
-//
-//
-//	q.push( { 1, "Ahmed", 10 });
-//	q.push( { 2, "Mohamed", 20 });
-//	q.push( { 3, "sarah", 30 });
-//
-//	Student student[4];
-//
-//	if (q.isEmpty() == false) {
-//		student[0] = q.front();		//ahmed
-//		q.pop();
-//		printStudent(student[0]);
-//
-//	}
-//
-//	if (q.isEmpty() == false) {
-//		student[1] = q.front();			//mohamed
-//		q.pop();
-//		printStudent(student[1]);
-//
-//	}
-//
-//	q.push( { 4, "Yassmin", 40 });
-//
-//	if (q.isEmpty() == false) {
-//		student[2] = q.front();			//sarah
-//		q.pop();
-//		printStudent(student[2]);
-//	}
-//
-//	if (q.isEmpty() == false) {
-//		student[3] = q.front();			//Yassmin
-//		q.pop();
-//		printStudent(student[3]);
-//	}
+	Node<Student> student[10];
 
-	Stack<Student> s(3);
+	student[0].data.id = 1;
+	student[0].data.grade = 10;
+	student[0].data.name = "Ahmed";
+
+	student[1].data.id = 2;
+	student[1].data.grade = 20;
+	student[1].data.name = "sarah";
 
 
-	s.push( { 1, "Ahmed", 10 });
-	s.push( { 2, "Mohamed", 20 });
-	s.push( { 3, "sarah", 30 });
-
-	Student student[4];
-
-	if (s.isEmpty() == false) {
-		student[0] = s.top();		//ahmed
-		s.pop();
-		printStudent(student[0]);
-
-	}
-
-	if (s.isEmpty() == false) {
-		student[1] = s.top();			//mohamed
-		s.pop();
-		printStudent(student[1]);
-
-	}
-
-	s.push( { 4, "Yassmin", 40 });
-
-	if (s.isEmpty() == false) {
-		student[2] = s.top();			//sarah
-		s.pop();
-		printStudent(student[2]);
-	}
+	student[2].data.id = 3;
+	student[2].data.grade = 4;
+	student[2].data.name = "Ali";
 
 
-	if (s.isEmpty() == false) {
-		student[3] = s.top();			//Yassmin
-		s.pop();
-		printStudent(student[3]);
-	}
 
+	Linked_list<Student> list;
 
+	list.insert_front(student[0]);
+	list.insert_front(student[1]);
+	list.insert_front(student[2]);
+
+	Node<Student> head = list.get_tail();
+
+	cout << head.data.name << endl;
 
 	return 0;
 }
