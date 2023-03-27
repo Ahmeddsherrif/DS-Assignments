@@ -1,49 +1,73 @@
 #include "main.h"
 
 int main() {
-	Student student[10];
 
-	student[0].id = 1;
-	student[0].grade = 10;
-	student[0].name = "Ahmed";
+	cout << "N = ";
 
-	student[1].id = 2;
-	student[1].grade = 20;
-	student[1].name = "sarah";
+	unsigned int N;
+	cin >> N;
 
-	student[2].id = 3;
-	student[2].grade = 4;
-	student[2].name = "Ali";
+	QueueLL<int> q_even;
+	QueueLL<int> q_odd;
 
-	QueueLL<Student> q;
-	q.push(student[0]);
-	q.push(student[1]);
-	q.push(student[2]);
+	StackLL<int> s_even;
+	StackLL<int> s_odd;
 
-	Student tempStudent;
+	int input;
 
-	while (q.isEmpty() == false) {
-		tempStudent = q.front();
-		q.pop();
+	unsigned int i;
+	for (i = 0; i < N; i++) {
+		cout << "Number (" << i + 1 << ") : ";
+		cin >> input;
 
-		cout << tempStudent.name << endl;
+		if (input % 2 == 0) {
+			q_even.push(input);
+			s_even.push(input);
+		} else {
+			q_odd.push(input);
+			s_odd.push(input);
+		}
 	}
-
 
 	cout << endl;
 
-	StackLL<Student> s;
-	s.push(student[0]);
-	s.push(student[1]);
-	s.push(student[2]);
+	int currentElement;
 
+	cout << "E_Queue: ";
+	while (q_even.isEmpty() == false) {
+		currentElement = q_even.front();
+		q_even.pop();
 
-	while (s.isEmpty() == false) {
-		tempStudent = s.top();
-		s.pop();
-
-		cout << tempStudent.name << endl;
+		cout << currentElement << "\t";
 	}
+
+	cout << endl;
+
+	cout << "O_Queue: ";
+	while (q_odd.isEmpty() == false) {
+		currentElement = q_odd.front();
+		q_odd.pop();
+
+		cout << currentElement << "\t";
+	}
+
+	cout << "\n" << endl;
+
+	cout << "E_Stack: ";
+	while (s_even.isEmpty() == false) {
+		currentElement = s_even.top();
+		s_even.pop();
+		cout << currentElement << "\t";
+	}
+	cout << endl;
+
+	cout << "O_Stack: ";
+	while (s_odd.isEmpty() == false) {
+		currentElement = s_odd.top();
+		s_odd.pop();
+		cout << currentElement << "\t";
+	}
+	cout << endl;
 
 	return 0;
 }
