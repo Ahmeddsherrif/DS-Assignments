@@ -15,8 +15,11 @@ struct Node {
 
 		Node() :
 				next { nullptr } {
-			//TBC: add data intializer
+
+			//data = genericType();
 		}
+
+		// TBC: Add Copy Ctor
 };
 
 template<typename genericType>
@@ -25,13 +28,15 @@ class Linked_list {
 		Node<genericType> *head;
 		Node<genericType> *tail;
 		unsigned int capacity;
-	public:
+	protected:
 		Linked_list();
-		void insert_front(Node<genericType>&);
-		void insert_back(Node<genericType>&);
+		virtual ~Linked_list();
 
-		Node<genericType> get_head();
-		Node<genericType> get_tail();
+		void insert_front(Node<genericType>*);
+		void insert_back(Node<genericType>*);
+
+		Node<genericType>* get_head();
+		Node<genericType>* get_tail();
 
 		void remove_head();
 		void remove_tail();
@@ -41,75 +46,98 @@ class Linked_list {
 
 template<typename genericType>
 Linked_list<genericType>::Linked_list() :
-		head { nullptr }, capacity { 0 } {
-
+		head { nullptr }, tail { nullptr }, capacity { 0 } {
 }
 
 template<typename genericType>
-void Linked_list<genericType>::insert_front(Node<genericType> &inputNode) {
+void Linked_list<genericType>::insert_front(Node<genericType> *tempNodePtr) {
 
+	// check if this is the first node in the list or not
 	if (capacity == 0) {
-		inputNode.next = nullptr;
-		tail = &inputNode;
+		tempNodePtr->next = nullptr;
+		this->tail = tempNodePtr;
 	} else {
-		inputNode.next = head;
+		tempNodePtr->next = this->head;
 	}
 
-	head = &inputNode;
+	this->head = tempNodePtr;
 
 	capacity++;
 }
 
 template<typename genericType>
-void Linked_list<genericType>::insert_back(Node<genericType> &inputNode) {
+void Linked_list<genericType>::insert_back(Node<genericType> *tempNodePtr) {
 
-	inputNode.next = nullptr;
+	tempNodePtr->next = nullptr;
 
+	// check if this is the first node in the list or not
 	if (capacity == 0) {
-
-		head = &inputNode;
+		(this->head) = tempNodePtr;
 	} else {
-		tail->next = &inputNode;
+		(this->tail)->next = tempNodePtr;
 	}
 
-	tail = &inputNode;
+	(this->tail) = tempNodePtr;
 
 	capacity++;
 }
 
 template<typename genericType>
-Node<genericType> Linked_list<genericType>::get_head(){
+Node<genericType>* Linked_list<genericType>::get_head() {
 	assert(this->capacity > 0);
 
-	return *head;
+	return head;
 }
 
 template<typename genericType>
-Node<genericType> Linked_list<genericType>::get_tail(){
+Node<genericType>* Linked_list<genericType>::get_tail() {
 	assert(this->capacity > 0);
 
-	return *tail;
+	return tail;
 }
 
-
 template<typename genericType>
-void Linked_list<genericType>::remove_head(){
+void Linked_list<genericType>::remove_head() {
 	assert(this->capacity > 0);
 
-	//TBC
+	Node<genericType> *tempNodePtr = head;
+
 	head = head->next;
 
+	delete tempNodePtr;
+
 	capacity--;
+
+	if (capacity == 0) {
+		assert(head == nullptr);
+		this->tail = nullptr;
+	}
 
 }
 
 template<typename genericType>
-void Linked_list<genericType>::remove_tail(){
+void Linked_list<genericType>::remove_tail() {
 	assert(this->capacity > 0);
 
-	//TBC
+	Node<genericType> *previousNodePtr = nullptr;
+	Node<genericType> *currentNodePtr = head;
+
+	while (currentNodePtr->next != nullptr) {
+		previousNodePtr = currentNodePtr;
+		currentNodePtr = currentNodePtr->next;
+	}
+
+	tail = previousNodePtr;
+
+	delete currentNodePtr;
+	currentNodePtr = nullptr;
 
 	capacity--;
+
+	if (capacity == 0) {
+		assert(tail == nullptr);
+		this->head = nullptr;
+	}
 }
 
 template<typename genericType>
@@ -117,20 +145,24 @@ bool Linked_list<genericType>::isEmpty() {
 	return (capacity == 0);
 }
 
-//Node<genericType> *tempNode;
-//
-//// Start at the address of head
-//tempNode = &head;
-//
-//// keep hopping until you find the tail node
-//while (tempNode->next != nullptr) {
-//	tempNode = &(tempNode->next);
-//}
-//
-//// make the current Tail Node point to the inputNode
-//tempNode->next = &inputNode;
-//
-//// Make the input Node the tail node (points to null)
-//inputNode.next = nullptr;
+template<typename genericType>
+Linked_list<genericType>::~Linked_list() {
+
+	Node<genericType> *tempNodePtr = nullptr;
+	Node<genericType> *currentNodePtr = nullptr;
+
+	// Start at the address of head
+	currentNodePtr = head;
+
+	// keep hopping until you find the tail node
+	while (currentNodePtr != nullptr) {
+		tempNodePtr = currentNodePtr;
+		currentNodePtr = currentNodePtr->next;
+
+		delete tempNodePtr;
+		tempNodePtr = nullptr;
+
+	}
+}
 
 #endif /* LINKED_LIST_H_ */

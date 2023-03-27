@@ -1,32 +1,49 @@
 #include "main.h"
 
 int main() {
-	Node<Student> student[10];
+	Student student[10];
 
-	student[0].data.id = 1;
-	student[0].data.grade = 10;
-	student[0].data.name = "Ahmed";
+	student[0].id = 1;
+	student[0].grade = 10;
+	student[0].name = "Ahmed";
 
-	student[1].data.id = 2;
-	student[1].data.grade = 20;
-	student[1].data.name = "sarah";
+	student[1].id = 2;
+	student[1].grade = 20;
+	student[1].name = "sarah";
+
+	student[2].id = 3;
+	student[2].grade = 4;
+	student[2].name = "Ali";
+
+	QueueLL<Student> q;
+	q.push(student[0]);
+	q.push(student[1]);
+	q.push(student[2]);
+
+	Student tempStudent;
+
+	while (q.isEmpty() == false) {
+		tempStudent = q.front();
+		q.pop();
+
+		cout << tempStudent.name << endl;
+	}
 
 
-	student[2].data.id = 3;
-	student[2].data.grade = 4;
-	student[2].data.name = "Ali";
+	cout << endl;
+
+	StackLL<Student> s;
+	s.push(student[0]);
+	s.push(student[1]);
+	s.push(student[2]);
 
 
+	while (s.isEmpty() == false) {
+		tempStudent = s.top();
+		s.pop();
 
-	Linked_list<Student> list;
-
-	list.insert_front(student[0]);
-	list.insert_front(student[1]);
-	list.insert_front(student[2]);
-
-	Node<Student> head = list.get_tail();
-
-	cout << head.data.name << endl;
+		cout << tempStudent.name << endl;
+	}
 
 	return 0;
 }

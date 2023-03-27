@@ -16,12 +16,15 @@
 
 using namespace std;
 
+#include "Student.h"
 
 #include "Stack.h"
 #include "Queue.h"
+
 #include "Linked_list.h"
 
-#include "Student.h"
+#include "QueueLL.h"
+#include "StackLL.h"
 
 
 #endif /* MAIN_H_ */
